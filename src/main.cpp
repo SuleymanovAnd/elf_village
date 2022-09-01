@@ -1,6 +1,7 @@
 #include <iostream>
+#include "tree.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
+    Tree forest = *new Tree (1);
+     cout << forest.countNeighbors() << " is neighbors to " << forest.getFindElf();
 }
