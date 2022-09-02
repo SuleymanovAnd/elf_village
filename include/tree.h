@@ -26,42 +26,54 @@ public:
         return findElf;
     }
 
+    int isTheElfOnABigBranch (){
+        for (int i = 0; i < children.size(); i++) {
+            for (int j = 0; j < children[i]->getChildren().size(); j++) {
+                if (children[i]->getChildren()[j]->getNameElf() == findElf){
+                    return 1; // да на большой
+                }
+                for (int k = 0; k< children[i]->getChildren()[j]->getChildren().size();k++){
+                    if (children[i]->getChildren()[j]->getChildren()[k]->getNameElf() == findElf){
+                        return 2; // нет на маленькой
+                    }
+
+                }
+            }
+        } return -1; // его нет ни на одной ветке
+    }
+
 
     int countNeighbors() {
         int Neighbors = 0;
-        bool nameFoundOnBig = false;
-        bool nameFoundOnMid = false;
-        if (children.empty()) return -1;
-        else { setFindElf();
+        if (isTheElfOnABigBranch() == -1) return -1;
+        else {
             for (int i = 0; i < children.size(); i++) {
 
-               cout << 1 <<children[i]->getNameElf()<< " " << nameFoundOnBig<< findElf << endl;
+               cout << 1 <<children[i]->getNameElf()<< " " <<  findElf << endl;
 
                 for (int j = 0; j < children[i]->getChildren().size(); j++) {
-                    if (children[i]->getChildren()[j]->getNameElf() == findElf) {
-                        nameFoundOnBig = true;
+                    if (isTheElfOnABigBranch () == 1 && children[i]->getChildren()[j]->getNameElf() != findElf
+                    && children[i]->getChildren()[j]->getNameElf() != "None") {
+                        Neighbors++;
                     }
 
-                    cout << 2 <<children[i]->getChildren()[j]->getNameElf()<< " "<<nameFoundOnBig<<" "<<findElf<< endl;
+                    cout << 2 <<children[i]->getChildren()[j]->getNameElf()<< " "<<" "<<findElf<< endl;
 
-                    if (children[i]->getChildren()[j]->getNameElf() != findElf
-                        && children[i]->getChildren()[j]->getNameElf() != "None" && nameFoundOnBig) {
-                        Neighbors++;}
 
                     for (int k = 0; k< children[i]->getChildren()[j]->getChildren().size();k++){
 
-                        if (children[i]->getChildren()[j]->getChildren()[k]->getNameElf() == findElf) {
-                            nameFoundOnMid = true;
+                        if (isTheElfOnABigBranch () == 2 &&
+                            children[i]->getChildren()[j]->getChildren()[k]->getNameElf() != "None") {
+                            Neighbors++;
                         }
 
-                        cout << 3 <<children[i]->getChildren()[j]->getChildren()[k]->getNameElf()<< " "<<nameFoundOnMid<<" "<<findElf<< endl;
+                        cout << 3 <<children[i]->getChildren()[j]->getChildren()[k]->getNameElf()<< " "<<findElf<< endl;
 
-                        if (children[i]->getChildren()[j]->getChildren()[k]->getNameElf() != findElf
-                        && children[i]->getChildren()[j]->getChildren()[k]->getNameElf() != "None" && (nameFoundOnMid||nameFoundOnBig)) {
+                        if (children[i]->getChildren()[j]->getNameElf() == findElf && isTheElfOnABigBranch () == 1
+                        && children[i]->getChildren()[j]->getChildren()[k]->getNameElf() != "None") {
                             Neighbors++;
                         }
                     }
-                    if (nameFoundOnMid) break;
                 }
             }
         }
