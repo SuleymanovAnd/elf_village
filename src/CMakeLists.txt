@@ -4,12 +4,12 @@ set (MY_DIRECTORY ${CMAKE_SOURCE_DIR}/include)
 
 set(SOURCE
         main.cpp
-
+        tree.cpp
         )
 set(INCLUDE
-    ${MY_DIRECTORY}/branch.h
+        ${MY_DIRECTORY}/branch.h
         ${MY_DIRECTORY}/tree.h
-        )
+      )
 
 
 
